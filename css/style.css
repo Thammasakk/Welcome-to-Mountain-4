@@ -1,0 +1,888 @@
+/*========== GOOGLE FONTS ==========*/
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+/*========== VARIABLES CSS ==========*/
+:root {
+    /*========== Colors ==========*/
+    /*Color mode HSL(hue, saturation, lightness)*/
+    --hue: 206;
+    --first-color: hsl(var(--hue), 17%, 37%); /* icon */
+    --first-color-alt: hsl(var(--hue), 17%, 33%); /* hover */
+    --first-color-light: hsl(var(--hue), 28%, 93%);
+    --first-color-lighten: hsl(var(--hue), 14%, 99%);
+    --title-color: hsl(var(--hue), 4%, 15%); /* h1, h2, h3, for dark mode */
+    --text-color: hsl(var(--hue), 4%, 35%); /* h1, h2, h3, all text for color */
+    --text-color-light: hsl(var(--hue), 4%, 55%);
+    --body-color: hsl(var(--hue), 0%, 100%);
+    --container-color: #fff;
+
+    /*========== Font and typography ==========*/
+    /*.5rem = 8px , 1rem = 16px ...*/
+    --body-font: 'Poppins', sans-serif;
+    --big-font-size: 2rem;
+    --h1-font-size: 1.5rem;
+    --h2-font-size: 1.25rem;
+    --h3-font-size: 1rem;
+    --normal-font-size: .938rem;
+    --small-font-size: .813rem;
+    --smaller-font-size: .75rem;
+
+    /*========== Font weight ==========*/
+    --font-medium: 500;
+    --font-semi-bold: 600;
+
+    /*========== Margin ==========*/
+    /*.5rem = 8px , 1rem = 16px ...*/
+    --mb-0-5: .5rem;
+    --mb-0-75: .75rem;
+    --mb-1: 1rem;
+    --mb-1-5: 1.5rem;
+    --mb-2: 2rem;
+    --mb-2-5: 2.5rem;
+
+    /*========== z index ==========*/
+    --z-tooltip: 10;
+    --z-fixed: 100;
+}
+
+/* Responsive typography */
+@media screen and (min-width: 992px) {
+    :root {
+        --big-font-size: 3.5rem;
+        --h1-font-size: 2.25rem;
+        --h2-font-size: 1.5rem;
+        --h3-font-size: 1.25rem;
+        --normal-font-size: 1rem;
+        --small-font-size: .875rem;
+        --smaller-font-size: .813rem;
+    }
+}
+
+/*========== BASE ==========*/
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body,
+button,
+input,
+textarea {
+    font-family: var(--body-font);
+    font-size: var(--normal-font-size);
+}
+
+body {
+    margin: var(--header-height) 0 0 0;
+    background-color: var(--body-color);
+    color: var(--text-color);
+    transition: .4s; /*For animation dark mode*/
+    overflow-x: hidden;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+h1,h2,h3 {
+    color: var(--text-color);
+    font-weight: var(--font-semi-bold);
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/*========== REUSABLE CSS CLASSES ==========*/
+.section {
+    padding: 8.5rem 0 8.5rem;
+}
+
+.section__title,
+.section__title-center {
+    font-size: var(--h2-font-size);
+    margin-bottom: var(--mb-2);
+    line-height: 140%;
+}
+
+.section__title-center {
+    text-align: center;
+}
+
+.container {
+    max-width: 992px;
+    margin-left: var(--mb-1-5);
+    margin-right: var(--mb-1-5);
+}
+
+.grid {
+    display: grid;
+}
+
+.main {
+    overflow: hidden; /*For animation*/
+}
+
+
+/*========== HEADER ==========*/
+.header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: var(--z-fixed);
+    transition: .4s; /*For animation dark mode*/
+} 
+
+/*========== NAV ==========*/
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem 2rem;
+    align-items: center;
+}
+
+.nav__logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    transition: .3s;
+}
+.nav__logo:hover {
+    color: var(--first-color-alt);
+}
+
+.nav__link {
+    font-size: 1rem;
+}
+
+.nav__link:hover {
+    color: var(--first-color-alt);
+}
+
+.nav__list,
+.nav__item,
+.nav__link {
+    color: #fff;
+}
+
+.nav__mobile__toggle {
+    display: none;
+}
+
+
+.nav__list {
+    display: flex;
+    gap: var(--mb-1);
+    padding: 0;
+    margin: 0;
+}
+
+@media screen and (max-width: 576px) {
+    .nav__list {
+        position: fixed;
+        inset: 0 0 0 30%;
+        flex-direction: column;
+        padding: min(30vh, 10rem) 2em;
+        text-align: center;
+        align-items: center;
+        --gap: 2rem;
+        background: hsl(0 0% 100% / 0.1);
+        backdrop-filter: blur(1rem);
+        transform: translateX(100%);
+        transition: transform 350ms ease-out;
+    }
+
+    .nav__list[data-visible="true"] {
+        transform: translateX(0%);
+    }
+
+    .nav__mobile__toggle {
+        display: block;
+        position: fixed;
+        z-index: 9999;
+        background-color: transparent;
+        background-image: url(/img/menu-line.svg);
+        background-repeat: no-repeat;
+        width: 2rem;
+        aspect-ratio: 1;
+        top: 2rem;
+        right: 1rem;
+    }
+
+    .nav__mobile__toggle[aria-expanded="true"] {
+        background-image: url(/img/close-line.svg);
+        position: fixed;
+    }
+
+    .nav__link {
+        color: var(--first-color);
+    }
+}
+
+/*========== HOME ==========*/
+.home__banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url(/img/home3edit4.jpg) no-repeat;
+    background-size: cover;
+    background-position: bottom center;
+    top: 0;
+}
+
+.home__banner,
+.home__content {
+    text-align: center;
+}
+
+.home__title,
+.home__description,
+.button__icon {
+    color: #fff;
+}
+
+.home__title {
+    font-size: var(--big-font-size);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.home__description {
+    margin-top: var(--mb-0-5);
+    font-size: var(--normal-font-size);
+}
+
+.button__icon {
+    font-size: var(--small-font-size);
+}
+
+.home__content {
+    border: 3px solid #ffffff;
+    padding: var(--mb-1);
+}
+
+
+/*========== BUTTONS ==========*/
+.button {
+    display: inline-block;
+    color: #fff;
+    padding: 0.5rem 1rem;
+    font-weight: var(--font-medium);
+    transition: .3s;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+}
+
+.button:hover {
+    background-color: var(--first-color-alt);
+}
+
+.button__icon {
+    transition: .3s;
+    color: #fff;
+}
+
+.button:hover .button__icon {
+    transform: translateY(.25rem);
+}
+
+.button--flex {
+    display: inline-flex;
+    align-items: center;
+    column-gap: .5rem;
+}
+
+.button--link {
+    color: var(--first-color);
+    font-weight: var(--font-medium);
+}
+
+.button--link:hover .button__icon {
+    transform: translateX(.25rem);
+}
+
+
+
+/*========== About ==========*/
+.about {
+    align-items: center;
+    justify-content: center;
+}
+.about__container {
+    align-items: center;
+    justify-content: center;
+}
+
+.about__title {
+    text-align: center;
+    margin-bottom: var(--mb-1-5);
+    transition: .3s;
+    transition-delay: .1s;
+    cursor: pointer;
+}
+
+.about__title:hover {
+    color: var(--first-color-light);
+}
+
+.about__info {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    column-gap: 1rem;
+}
+
+
+/*========== MOUNTAIN ==========*/
+.mountain__card {
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.mountain__card__text1 {
+    background: var(--first-color);
+    border-radius: 10px;
+    padding: .5rem;
+    width: 100%;
+    clip-path: circle(8% at 90% 7%);
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+    width: 20%;
+    top: 25%;
+    right: 10%;
+    position: absolute;
+}
+.mountain__card__text2 {
+    background: var(--first-color);
+    border-radius: 10px;
+    padding: .5rem;
+    width: 100%;
+    clip-path: circle(8% at 90% 7%);
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+    width: 20%;
+    top: 25%;
+    right: 50%;
+    position: absolute;
+}
+.mountain__card__text3 {
+    background: var(--first-color);
+    border-radius: 10px;
+    padding: .5rem;
+    width: 100%;
+    clip-path: circle(8% at 90% 7%);
+    transition: all .5s ease-in-out;
+    cursor: pointer;
+    width: 20%;
+    top: 10%;
+    right: 80%;
+    position: absolute;
+}
+.mountain__card__text1:hover {
+    clip-path: circle(75%);
+    background: var(--first-color-lighten);
+}
+
+.mountain__card__text2:hover {
+    clip-path: circle(75%);
+    background: var(--first-color-lighten);
+}
+
+.mountain__card__text3:hover {
+    clip-path: circle(75%);
+    background: var(--first-color-lighten);
+}
+
+.mountain__card__title {
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: var(--mb-0-5);
+    font-size: var(--normal-font-size);
+    margin: 0;
+}
+
+.mountain__card__description {
+    font-size: var(--small-font-size);
+}
+
+span {
+    margin-bottom: 5%;
+    float: right;
+    color: var(--first-color-light);
+    font-weight: bold;
+    transition: color .5s;
+    position: relative;
+    margin-right: 5%;
+}
+
+.mountain__view {
+    width: 100%;
+    background-size: cover;
+    object-fit: cover;
+    object-position: center;
+}
+
+.mountain__title {
+    transition: .3s;
+    transition-delay: .1s;
+    cursor: pointer;
+}
+
+.mountain__title:hover {
+    color: var(--first-color-light);
+}
+
+.mountain__data {
+    text-align: center;
+    text-transform: uppercase;
+    padding: 5.5rem 0 4rem;
+}
+
+.mountain__lists {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mountain__boards {
+    object-fit: cover;
+    object-position: center;
+    position: relative;
+    width: 100px;
+    display: flex;
+    right: 0;
+    height: 600px;
+    border-radius: 60px;
+    transition: all 5s ease-in-out;
+    transition-duration: .1s;
+    transition-delay: 1s;
+    cursor: pointer;
+    align-items: center;
+}
+
+.mountain__boards:hover {
+    min-width: 600px;
+    transform: translateY(3rem);
+}
+
+/*========== BLOG ==========*/
+.blog__container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.blog__data {
+    text-align: center;
+}
+
+.blog__img {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: var(--mb-0-5);
+}
+
+.blog__title {
+    margin-bottom: var(--mb-0-75);
+}
+
+
+/*========== CONTACT ==========*/
+.contact__container {
+    position: relative;
+    background-image: url(/img/contact__edit3.jpg);
+    background-size: cover;
+    background-position: center top;
+    width: 100%;
+    height: 400px;
+    align-items: center;
+    text-align: center;
+    justify-content: center;
+}
+
+.contact__content {
+    justify-content: center;
+    align-items: center;
+    display: grid;
+    row-gap: 4rem;
+}
+
+.contact__title {
+    font-size: var(--h1-font-size);
+    color: #fff;
+    font-weight: 700;
+    text-transform: uppercase;
+    text-shadow: 1px 5px 5px  grey;
+}
+
+.contact__title:hover {
+    font-size: 2.5rem;
+    color: var(--first-color-alt);
+    text-shadow: 5px 10px 1px  grey;
+}
+
+.contact__social {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.contact__social-link {
+    padding: 1.875rem 0.2rem;
+    margin-left: 5rem;
+    margin-right: 5rem;
+    cursor: pointer;
+    border: 1px solid rgb(209, 209, 209);
+    border-top-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    transform: rotate(10deg);
+    box-shadow: 5px 6px 3px rgb(92, 92, 92);
+}
+
+.contact__social-icon {
+    color: #fff;
+    font-size: 1.5rem;
+}
+
+.contact__social-icon:hover {
+    color: var(--first-color-alt);
+}
+
+/*========== FOOTER ==========*/
+.footer__copy {
+    color: var(--text-color-light);
+    text-align: center;
+    font-size: .875rem;
+}
+
+
+/*========== SCROLL UP ==========*/
+
+
+
+/*========== SCROLL BAR ==========*/
+::-webkit-scrollbar {
+    width: .6rem;
+    background: var(--first-color-light);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--first-color);
+    border-radius: .5rem;
+}
+
+
+/*========== BREAKPOINTS ==========*/
+/* For small devices */
+@media screen and (min-width: 320px) {
+    .container {
+        margin-left: var(--mb-1);
+        margin-right: var(--mb-1);
+    }
+
+    .section {
+        padding: 7.5rem 0 7.5rem;
+    }
+
+    .home__title {
+        font-size: 1.5rem;
+    }
+    .home__banner {
+        height: 90vh;
+    }
+
+    .about__info {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 1rem;
+    }
+
+    .about__description {
+        font-size: 1rem;
+    }
+
+    .mountain__view {
+        height: 400px;
+    }
+
+    .mountain__card__text1 {
+        clip-path: circle(5% at 89% 7%);
+        width: 50%;
+    }
+    .mountain__card__text2 {
+        clip-path: circle(5% at 89% 7%);
+        width: 50%;
+    }
+    .mountain__card__text3 {
+        clip-path: circle(5% at 7% 7%);
+        width: 50%;
+        right: 40%;
+    }
+
+    span {
+        margin-right: 7%;
+    }
+
+    .span__edit {
+        float: left;
+        margin-left: 3%;
+    }
+
+    .mountain__card__title {
+        font-size: .875rem;
+    }
+
+    .mountain__lists {
+        display: grid;
+        gap: var(--mb-1);
+    }
+
+    .mountain__boards {
+        height: 70px;
+        width: 600px;
+        object-position: center;
+    }
+    .mountain__boards:hover {
+        height: 400px;
+        transform: translateY(1rem);
+    }
+
+    .blog__container {
+        grid-template-columns: repeat(1, 1fr);
+        gap: 4rem;
+    }
+
+    .blog__img {
+        height: 300px;
+    }
+
+    .contact__title {
+        font-size: 1.25rem;
+    }
+
+    .contact__title:hover {
+        font-size: 1.55rem;
+        text-shadow: 5px 10px 1px  rgb(255, 255, 255);
+    }
+
+    .contact__social-link {
+        margin-left: 2.2rem;
+        margin-right: 2.2rem;
+    } 
+}
+
+
+
+/* For small devices(landscape phones, 576px and up) */
+@media screen and (min-width: 576px) {
+    .nav__logo {
+        font-size: 1.25rem;
+    }
+
+    .nav__link {
+        font-size: .875rem;
+    }
+
+    .home__description {
+        font-size: 1rem;
+    }
+
+    .mountain__card__text1 {
+        clip-path: circle(8% at 88% 7%);
+        width: 25%;
+    }
+    .mountain__card__text2 {
+        clip-path: circle(8% at 88% 7%);
+        width: 25%;
+    }
+    .mountain__card__text3 {
+        clip-path: circle(6% at 10% 7%);
+        width: 25%;
+        right: 65%;
+    }
+    .span__edit {
+        float: left;
+    }
+
+    .blog__img {
+        height: 350px;
+    }
+}
+
+/* For medium devices(tablets, 768px and up) */
+@media screen and (min-width: 768px) {
+    .nav__logo {
+        font-size: 1.5rem;
+    }
+
+    .nav__link {
+        font-size: 1rem;
+    }
+
+    .nav__list {
+        gap: var(--mb-1-5);
+    }
+
+    .home__title {
+        font-size: 1.75rem;
+    }
+
+    .about__info {
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1rem;
+    }
+
+    .mountain__view {
+        height: auto;
+    }
+
+    .mountain__lists {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .mountain__boards {
+        width: 100px;
+        height: 550px;
+    }
+    
+    .mountain__boards:hover {
+        width: 550px;
+    }
+
+    .span__edit {
+        margin-left: 5%;
+    }
+
+    .blog__container {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--mb-1-5);
+    }
+
+    .blog__img {
+        height: 380px;
+    }
+
+    .contact__title {
+        font-size: 1.75rem;
+    }
+
+    .contact__social-link {
+        margin-left: 4rem;
+        margin-right: 4rem;
+    } 
+}
+
+/* For Large devices(desktops, 992px and up) */
+@media screen and (min-width: 992px) {
+    .container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .section {
+        padding: 8.5rem 0 8.5rem;
+    }
+
+    .nav__list {
+        gap: var(--mb-2-5);
+    }
+
+    .about__info {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        column-gap: 1rem;
+    }
+
+    .mountain__lists {
+        gap: var(--mb-2);
+    }
+
+    .mountain__card__text3 {
+        clip-path: circle(8% at 10% 7%);
+        width: 20%;
+        right: 64%;
+}
+    span {
+        margin-right: 8%;   
+    }
+
+    .span__edit {
+        float: left;
+    }
+}
+/* For X-Large devices(large desktops, 1200px and up) */
+@media screen and (min-width: 1200px) {
+    .about__title {
+        margin-bottom: var(--mb-2);
+    }
+
+    .about__info {
+        column-gap: 2rem;
+    }
+
+    .span__edit {
+        margin-left: 6%;
+    }
+
+    span {
+        margin-right: 6%;
+    }
+
+    .mountain__card__text2 {
+        clip-path: circle(8% at 90% 7%);
+        width: 20%;
+    }
+    .mountain__card__text1 {
+        clip-path: circle(8% at 90% 7%);
+        width: 20%;
+    }
+
+    .blog__img {
+        height: 400px;
+    }
+}
+
+/* For XX-Large devices(larger desktops, 1400px and up) */
+@media screen and (min-width: 1400px) {
+    .mountain__card__text3{
+        clip-path: circle(6% at 10% 6%);
+    }
+
+    .mountain__card__text1 {
+        clip-path: circle(6% at 90% 6%);
+    }
+    .mountain__card__text2 {
+        clip-path: circle(6% at 90% 6%);
+    }
+
+    span {
+        margin-right: 7%;
+    }
+
+    .span__edit {
+        margin-left: 7%;
+    }
+}
